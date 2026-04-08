@@ -1,0 +1,187 @@
+✅ Most Important PL/SQL Topics (Yardi POV)
+
+1) PL/SQL Basics
+
+Difference between SQL and PL/SQL
+
+PL/SQL block structure
+DECLARE – BEGIN – EXCEPTION – END
+
+Variables and data types (%TYPE, %ROWTYPE)
+
+
+
+---
+
+2) Conditional Statements
+
+IF, IF-ELSE, IF-ELSIF
+
+CASE statement
+
+
+
+---
+
+3) Loops (Very Important)
+
+LOOP
+
+WHILE LOOP
+
+FOR LOOP
+
+EXIT WHEN
+
+
+
+---
+
+4) Cursors (Very Very Important for Yardi)
+
+Implicit cursor
+
+Explicit cursor
+
+Cursor with parameters
+
+Cursor FOR loop
+
+%FOUND, %NOTFOUND, %ROWCOUNT, %ISOPEN
+
+
+
+---
+
+5) Exception Handling (Must Prepare)
+
+Predefined exceptions (NO_DATA_FOUND, TOO_MANY_ROWS)
+
+User-defined exceptions
+
+WHEN OTHERS
+
+
+
+---
+
+6) Procedures and Functions (Most Asked)
+
+Create procedure
+
+Create function
+
+IN, OUT, IN OUT parameters
+
+Difference between procedure and function
+
+Calling procedure/function
+
+
+
+---
+
+7) Packages (Basic Knowledge)
+
+Package specification
+
+Package body
+
+Advantages of package
+
+
+(Yardi may ask basic package questions)
+
+
+---
+
+8) Triggers (Important)
+
+BEFORE trigger, AFTER trigger
+
+INSERT / UPDATE / DELETE triggers
+
+Row level trigger vs Statement level trigger
+
+:NEW and :OLD keywords
+
+
+
+---
+
+9) Stored Program Units
+
+Stored procedure
+
+Stored function
+
+Trigger
+
+Package
+
+
+(They may ask definition + difference)
+
+
+---
+
+10) Transaction Control in PL/SQL
+
+COMMIT
+
+ROLLBACK
+
+SAVEPOINT
+
+
+
+---
+
+11) Built-in Functions (Basic)
+
+NVL, DECODE
+
+TO_CHAR, TO_DATE
+
+SYSDATE
+
+
+
+---
+
+⭐ Top 5 PL/SQL Must Prepare (Yardi Interview)
+
+1. Procedures & Functions
+
+
+2. Cursors
+
+
+3. Exception Handling
+
+
+4. Triggers
+
+
+5. Loops + IF-ELSE
+
+
+
+
+---
+
+🎯 Practical Questions Yardi may ask
+
+Write procedure to insert employee record
+
+Write function to return salary of employee
+
+Cursor program to display all employees deptwise
+
+Trigger to prevent salary update if salary < old salary
+
+Handle exception when employee not found
+
+
+
+---

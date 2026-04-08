@@ -1,0 +1,283 @@
+
+
+# ✅ 1) Difference between SQL and PL/SQL (Easy Interview Answer)
+
+### ✅ SQL (Structured Query Language)
+
+SQL is used to **talk to database**.
+
+👉 SQL is used for:
+
+* Fetching data (SELECT)
+* Inserting (INSERT)
+* Updating (UPDATE)
+* Deleting (DELETE)
+
+📌 SQL works **one statement at a time**.
+
+✅ Example:
+
+```sql
+SELECT * FROM tenant;
+```
+
+---
+
+### ✅ PL/SQL (Procedural Language SQL)
+
+PL/SQL is used to **write complete programs** in database.
+
+👉 PL/SQL is used for:
+
+* Writing logic (IF, LOOP)
+* Using variables
+* Handling errors (Exception)
+* Writing procedures, functions, triggers
+
+📌 PL/SQL can contain **multiple SQL statements + programming logic**.
+
+✅ Example:
+
+```sql
+BEGIN
+   UPDATE tenant SET rent = rent + 1000 WHERE tenant_id = 101;
+   COMMIT;
+END;
+```
+
+---
+
+## 🎯 Real Life Example (Yardi Style)
+
+### SQL is like:
+
+🧾 Asking receptionist:
+➡️ "Give me tenant details of room 101."
+
+### PL/SQL is like:
+
+🧠 Giving full instructions:
+➡️ "If tenant rent is pending, add fine, update bill, print receipt, and if error occurs show message."
+
+---
+
+## ✅ Interview Line (Perfect)
+
+👉 **SQL is used to write queries. PL/SQL is used to write programs that include SQL + conditions + loops + exception handling.**
+
+---
+
+# ✅ 2) PL/SQL Block Structure (DECLARE – BEGIN – EXCEPTION – END)
+
+PL/SQL program is written inside a **block**.
+
+### Structure:
+
+```sql
+DECLARE
+   -- variables declared here
+BEGIN
+   -- main logic here
+EXCEPTION
+   -- error handling here
+END;
+```
+
+---
+
+## ✅ Easy Explanation
+
+### 🔹 DECLARE block
+
+Used to **declare variables** (like storage box).
+
+### 🔹 BEGIN block
+
+Main work happens here (like execution room).
+
+### 🔹 EXCEPTION block
+
+Handles errors (like backup plan).
+
+### 🔹 END
+
+Ends the PL/SQL block.
+
+---
+
+## 🎯 Real Life Example (Hotel Billing)
+
+Imagine you are calculating bill in hotel.
+
+* DECLARE = you keep paper + pen ready
+* BEGIN = you calculate bill
+* EXCEPTION = if calculator fails, handle error
+* END = bill completed
+
+---
+
+## ✅ Example PL/SQL Block
+
+```sql
+DECLARE
+   v_rent NUMBER := 15000;
+BEGIN
+   DBMS_OUTPUT.PUT_LINE('Tenant rent is: ' || v_rent);
+END;
+```
+
+📌 Output:
+Tenant rent is: 15000
+
+---
+
+# ✅ 3) Variables and Data Types in PL/SQL
+
+## 🔹 What is Variable?
+
+Variable is like a **container** that stores a value.
+
+### Example:
+
+```sql
+v_name VARCHAR2(20);
+v_age NUMBER;
+```
+
+---
+
+## 🔹 Common Data Types
+
+| Data Type | Stores        |
+| --------- | ------------- |
+| NUMBER    | salary, rent  |
+| VARCHAR2  | name, address |
+| DATE      | payment date  |
+| BOOLEAN   | true/false    |
+
+---
+
+# ✅ %TYPE (Very Important for Interview)
+
+### 🔥 Meaning:
+
+**%TYPE copies datatype from a column.**
+
+So you don’t need to manually write datatype.
+
+---
+
+## 🎯 Real Life Example
+
+Suppose tenant phone number column datatype changes from NUMBER to VARCHAR.
+
+If you wrote datatype manually → your code may break.
+
+But if you use **%TYPE** → code auto adjusts.
+
+---
+
+## ✅ Example (Yardi Tenant Example)
+
+```sql
+DECLARE
+   v_tname tenant.tname%TYPE;
+BEGIN
+   SELECT tname INTO v_tname
+   FROM tenant
+   WHERE tenant_id = 101;
+
+   DBMS_OUTPUT.PUT_LINE('Tenant Name: ' || v_tname);
+END;
+```
+
+📌 Here `v_tname` will automatically become same datatype as `tenant.tname`.
+
+---
+
+## ✅ Interview Line
+
+👉 **%TYPE is used to declare variable with same datatype as a table column.**
+
+---
+
+# ✅ %ROWTYPE (Very Important for Interview)
+
+### 🔥 Meaning:
+
+**%ROWTYPE stores a complete row (all columns) of a table.**
+
+Instead of taking one column, it takes full row.
+
+---
+
+## 🎯 Real Life Example
+
+If you want all details of tenant like:
+
+* name
+* rent
+* address
+* phone
+
+Then using separate variables is time waste.
+
+So use **%ROWTYPE**.
+
+---
+
+## ✅ Example
+
+```sql
+DECLARE
+   v_tenant tenant%ROWTYPE;
+BEGIN
+   SELECT * INTO v_tenant
+   FROM tenant
+   WHERE tenant_id = 101;
+
+   DBMS_OUTPUT.PUT_LINE('Tenant Name: ' || v_tenant.tname);
+   DBMS_OUTPUT.PUT_LINE('Rent: ' || v_tenant.rent);
+END;
+```
+
+📌 `v_tenant` now contains full row like an object.
+
+---
+
+## ✅ Interview Line
+
+👉 **%ROWTYPE is used to store an entire row of a table in one variable.**
+
+---
+
+# ✅ %TYPE vs %ROWTYPE (Most Asked)
+
+| Feature  | %TYPE               | %ROWTYPE    |
+| -------- | ------------------- | ----------- |
+| Stores   | Single column value | Entire row  |
+| Used for | one field           | full record |
+| Example  | emp.sal%TYPE        | emp%ROWTYPE |
+
+---
+
+# ⭐ Out of the Box Example (Shopping Cart)
+
+### %TYPE Example
+
+You want only price:
+
+```sql
+v_price product.price%TYPE;
+```
+
+### %ROWTYPE Example
+
+You want full product:
+
+```sql
+v_product product%ROWTYPE;
+```
+
+---
+
