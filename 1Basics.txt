@@ -105,17 +105,6 @@ Ends the PL/SQL block.
 
 ---
 
-## 🎯 Real Life Example (Hotel Billing)
-
-Imagine you are calculating bill in hotel.
-
-* DECLARE = you keep paper + pen ready
-* BEGIN = you calculate bill
-* EXCEPTION = if calculator fails, handle error
-* END = bill completed
-
----
-
 ## ✅ Example PL/SQL Block
 
 ```sql
@@ -248,36 +237,5 @@ END;
 ## ✅ Interview Line
 
 👉 **%ROWTYPE is used to store an entire row of a table in one variable.**
-
----
-
-# ✅ %TYPE vs %ROWTYPE (Most Asked)
-
-| Feature  | %TYPE               | %ROWTYPE    |
-| -------- | ------------------- | ----------- |
-| Stores   | Single column value | Entire row  |
-| Used for | one field           | full record |
-| Example  | emp.sal%TYPE        | emp%ROWTYPE |
-
----
-
-# ⭐ Out of the Box Example (Shopping Cart)
-
-### %TYPE Example
-
-You want only price:
-
-```sql
-v_price product.price%TYPE;
-```
-
-### %ROWTYPE Example
-
-You want full product:
-
-```sql
-v_product product%ROWTYPE;
-```
-
 ---
 
