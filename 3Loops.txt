@@ -1,0 +1,158 @@
+Loops in PL/SQL are used when we want to **repeat the same code multiple times**.
+
+Example (Yardi style):
+👉 Print rent receipt for 12 months
+👉 Calculate late fee for multiple tenants
+👉 Display property list one by one
+
+---
+
+# ✅ 1) Simple LOOP (with EXIT WHEN) – Real World Use
+
+### When we use it?
+
+When we **don’t know exact number of times** loop will run.
+
+### Real Example:
+
+👉 Tenant has pending dues, keep deducting payment until dues become 0.
+
+Example:
+Tenant due = 52000
+Each month pays = 10000
+We don’t know how many months required exactly (it depends).
+
+```sql
+DECLARE
+   due_amt NUMBER := 52000;
+BEGIN
+   LOOP
+      DBMS_OUTPUT.PUT_LINE('Due before payment: ' || due_amt);
+
+      due_amt := due_amt - 10000;
+
+      EXIT WHEN due_amt <= 0;
+   END LOOP;
+
+   DBMS_OUTPUT.PUT_LINE('All dues cleared!');
+END;
+/
+```
+
+📌 Used when process continues **until a condition becomes true**.
+
+---
+
+# ✅ 2) WHILE LOOP – Real World Use
+
+### When we use it?
+
+When condition should be checked **before entering loop**.
+
+### Real Example:
+
+👉 Apply late fee daily until payment is done.
+
+Example:
+Late days = 5
+Fee per day = 200
+
+```sql
+DECLARE
+   late_days NUMBER := 5;
+   total_fee NUMBER := 0;
+BEGIN
+   WHILE late_days > 0 LOOP
+      total_fee := total_fee + 200;
+      late_days := late_days - 1;
+   END LOOP;
+
+   DBMS_OUTPUT.PUT_LINE('Total Late Fee = ' || total_fee);
+END;
+/
+```
+
+📌 WHILE is used when you want:
+✅ check condition first
+✅ then repeat
+
+---
+
+# ✅ 3) FOR LOOP – Real World Use
+
+### When we use it?
+
+When we know **exact number of iterations**.
+
+### Real Example:
+
+👉 Generate rent receipts for 12 months.
+
+```sql
+BEGIN
+   FOR month_no IN 1..12 LOOP
+      DBMS_OUTPUT.PUT_LINE('Generating Rent Receipt for Month: ' || month_no);
+   END LOOP;
+END;
+/
+```
+
+📌 FOR loop is mostly used in reports like:
+
+* monthly report
+* yearly tax report
+* 12 months rent calculation
+
+---
+
+# ✅ 4) EXIT WHEN – Real World Use
+
+### When we use it?
+
+To stop loop early when condition becomes true.
+
+### Real Example:
+
+👉 Search tenant in list, once found stop searching.
+
+```sql
+DECLARE
+   i NUMBER := 1;
+BEGIN
+   LOOP
+      DBMS_OUTPUT.PUT_LINE('Checking Tenant Record: ' || i);
+
+      EXIT WHEN i = 5;  -- assume tenant found at record 5
+
+      i := i + 1;
+   END LOOP;
+
+   DBMS_OUTPUT.PUT_LINE('Tenant Found. Stop Searching.');
+END;
+/
+```
+
+📌 Used in searching / validation scenarios.
+
+---
+
+# ⭐ Interview Summary (Best Answer)
+
+### ✅ LOOP
+
+Used when iterations are unknown (depends on condition)
+
+### ✅ WHILE LOOP
+
+Used when condition must be checked before executing loop
+
+### ✅ FOR LOOP
+
+Used when number of repetitions is fixed (example: 12 months report)
+
+### ✅ EXIT WHEN
+
+Used to stop loop early when required condition is met
+
+---
+
