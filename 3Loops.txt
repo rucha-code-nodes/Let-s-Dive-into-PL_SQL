@@ -1,158 +1,207 @@
-Loops in PL/SQL are used when we want to **repeat the same code multiple times**.
+# ✅ 1) SIMPLE LOOP (Basic LOOP)
 
-Example (Yardi style):
-👉 Print rent receipt for 12 months
-👉 Calculate late fee for multiple tenants
-👉 Display property list one by one
+### 🔥 Meaning:
+
+It runs **again and again** until you explicitly stop it using:
+
+✅ `EXIT;`
+or
+✅ `EXIT WHEN condition;`
+
+### Syntax
+
+```sql
+LOOP
+   statements;
+   EXIT WHEN condition;
+END LOOP;
+```
 
 ---
 
-# ✅ 1) Simple LOOP (with EXIT WHEN) – Real World Use
-
-### When we use it?
-
-When we **don’t know exact number of times** loop will run.
-
-### Real Example:
-
-👉 Tenant has pending dues, keep deducting payment until dues become 0.
-
-Example:
-Tenant due = 52000
-Each month pays = 10000
-We don’t know how many months required exactly (it depends).
+## Example (Yardi style): Print rent receipt for 12 months
 
 ```sql
 DECLARE
-   due_amt NUMBER := 52000;
+   v_month NUMBER := 1;
 BEGIN
    LOOP
-      DBMS_OUTPUT.PUT_LINE('Due before payment: ' || due_amt);
+      DBMS_OUTPUT.PUT_LINE('Generating rent receipt for Month = ' || v_month);
 
-      due_amt := due_amt - 10000;
+      v_month := v_month + 1;
 
-      EXIT WHEN due_amt <= 0;
+      EXIT WHEN v_month > 12;
    END LOOP;
-
-   DBMS_OUTPUT.PUT_LINE('All dues cleared!');
 END;
 /
 ```
 
-📌 Used when process continues **until a condition becomes true**.
+### Output:
+
+Month 1 receipt
+Month 2 receipt
+...
+Month 12 receipt
+
+### ⭐ Interview Point:
+
+* Used when you **don’t know exact iterations** OR want manual control.
+* Must have EXIT otherwise infinite loop.
 
 ---
 
-# ✅ 2) WHILE LOOP – Real World Use
+# ✅ 2) WHILE LOOP
 
-### When we use it?
+### 🔥 Meaning:
 
-When condition should be checked **before entering loop**.
+It checks condition **first**, then runs loop.
+If condition is false initially → loop will not run even once.
 
-### Real Example:
+### Syntax
 
-👉 Apply late fee daily until payment is done.
+```sql
+WHILE condition LOOP
+   statements;
+END LOOP;
+```
 
-Example:
-Late days = 5
-Fee per day = 200
+---
+
+## Example (Yardi style): Apply late fee until pending balance becomes 0
 
 ```sql
 DECLARE
-   late_days NUMBER := 5;
-   total_fee NUMBER := 0;
+   v_balance NUMBER := 5000;
 BEGIN
-   WHILE late_days > 0 LOOP
-      total_fee := total_fee + 200;
-      late_days := late_days - 1;
+   WHILE v_balance > 0 LOOP
+      DBMS_OUTPUT.PUT_LINE('Pending Balance = ' || v_balance);
+
+      v_balance := v_balance - 1000;
    END LOOP;
 
-   DBMS_OUTPUT.PUT_LINE('Total Late Fee = ' || total_fee);
+   DBMS_OUTPUT.PUT_LINE('Balance cleared!');
 END;
 /
 ```
 
-📌 WHILE is used when you want:
-✅ check condition first
-✅ then repeat
+### Output:
+
+Pending Balance = 5000
+Pending Balance = 4000
+...
+Balance cleared!
+
+### ⭐ Interview Point:
+
+* Used when repetition depends on a **condition**.
+* Condition is checked at the start.
 
 ---
 
-# ✅ 3) FOR LOOP – Real World Use
+# ✅ 3) FOR LOOP (Most common in Interviews)
 
-### When we use it?
+### 🔥 Meaning:
 
-When we know **exact number of iterations**.
+Used when you know **exact number of iterations**.
+PL/SQL automatically increments the counter.
 
-### Real Example:
-
-👉 Generate rent receipts for 12 months.
+### Syntax
 
 ```sql
-BEGIN
-   FOR month_no IN 1..12 LOOP
-      DBMS_OUTPUT.PUT_LINE('Generating Rent Receipt for Month: ' || month_no);
-   END LOOP;
-END;
-/
+FOR i IN 1..10 LOOP
+   statements;
+END LOOP;
 ```
-
-📌 FOR loop is mostly used in reports like:
-
-* monthly report
-* yearly tax report
-* 12 months rent calculation
 
 ---
 
-# ✅ 4) EXIT WHEN – Real World Use
-
-### When we use it?
-
-To stop loop early when condition becomes true.
-
-### Real Example:
-
-👉 Search tenant in list, once found stop searching.
+## Example (Yardi style): Calculate rent for 12 months
 
 ```sql
 DECLARE
-   i NUMBER := 1;
+   v_rent NUMBER := 15000;
+BEGIN
+   FOR m IN 1..12 LOOP
+      DBMS_OUTPUT.PUT_LINE('Month ' || m || ' Rent = ' || v_rent);
+   END LOOP;
+END;
+/
+```
+
+### ⭐ Interview Point:
+
+* Best for fixed cycles like **12 months rent, yearly lease, etc.**
+* Counter variable (m) is auto-managed (no need to increment).
+
+---
+
+# ✅ 4) EXIT WHEN (Very Important)
+
+### 🔥 Meaning:
+
+Used to stop loop when a condition becomes true.
+
+---
+
+## Example (Yardi style): Stop when rent exceeds limit
+
+```sql
+DECLARE
+   v_rent NUMBER := 10000;
 BEGIN
    LOOP
-      DBMS_OUTPUT.PUT_LINE('Checking Tenant Record: ' || i);
+      DBMS_OUTPUT.PUT_LINE('Rent = ' || v_rent);
 
-      EXIT WHEN i = 5;  -- assume tenant found at record 5
+      v_rent := v_rent + 2000;
 
-      i := i + 1;
+      EXIT WHEN v_rent > 20000;
    END LOOP;
 
-   DBMS_OUTPUT.PUT_LINE('Tenant Found. Stop Searching.');
+   DBMS_OUTPUT.PUT_LINE('Rent limit exceeded, stopped!');
 END;
 /
 ```
 
-📌 Used in searching / validation scenarios.
+### ⭐ Interview Point:
+
+* Used mostly with **simple LOOP**
+* Prevents infinite loop
 
 ---
 
-# ⭐ Interview Summary (Best Answer)
+# ✅ BEST INTERVIEW EXAMPLE (Real Yardi Type)
 
-### ✅ LOOP
+### Scenario:
 
-Used when iterations are unknown (depends on condition)
+We have tenant rent. Increase rent 5% every year for 5 years.
 
-### ✅ WHILE LOOP
+```sql
+DECLARE
+   v_rent NUMBER := 20000;
+BEGIN
+   FOR yr IN 1..5 LOOP
+      v_rent := v_rent + (v_rent * 0.05);
 
-Used when condition must be checked before executing loop
+      DBMS_OUTPUT.PUT_LINE('Year ' || yr || ' Updated Rent = ' || v_rent);
+   END LOOP;
+END;
+/
+```
 
-### ✅ FOR LOOP
+### ⭐ This is perfect for Yardi because:
 
-Used when number of repetitions is fixed (example: 12 months report)
+* Rent escalation is real estate common
+* Shows calculation + loop use
 
-### ✅ EXIT WHEN
+---
 
-Used to stop loop early when required condition is met
+# 🔥 Quick Difference Table (Must Remember)
+
+| Loop Type  | Condition Check        | Best Use                                |
+| ---------- | ---------------------- | --------------------------------------- |
+| LOOP       | Inside loop using EXIT | Unknown iterations                      |
+| WHILE LOOP | At beginning           | Run until condition becomes false       |
+| FOR LOOP   | Fixed range            | Known iterations (months/years/records) |
 
 ---
 
